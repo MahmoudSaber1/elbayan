@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 	description: "مكتب البيان لتحفيظ القران",
 	authors: [{ name: "Mahmoud Saber", url: "https://github.com/MahmoudSaber1/" }],
 	icons: {
-		icon: "/icons/logo.webp",
+		icon: "/icons/logo.svg",
 	},
 };
 
