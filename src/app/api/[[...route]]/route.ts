@@ -4,11 +4,12 @@ import { cors } from "hono/cors";
 import { handle } from "hono/vercel";
 
 import auth from "@/features/auth/server/route";
+import students from "@/features/students/server/route";
 
 const app = new Hono().basePath("/api");
 app.use("/api/*", cors());
 
-const routes = app.route("/auth", auth);
+const routes = app.route("/auth", auth).route("/students", students);
 
 export const GET = handle(app);
 export const POST = handle(app);
