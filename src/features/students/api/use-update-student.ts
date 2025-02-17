@@ -11,8 +11,8 @@ export const useUpdateStudent = () => {
     const queryClient = useQueryClient();
 
     const mutation = useMutation<ResponseType, Error, RequestType>({
-        mutationFn: async ({ json, param }) => {
-            const response = await client.api.students.update[":studentId"]["$put"]({ param, json });
+        mutationFn: async ({ form, param }) => {
+            const response = await client.api.students.update[":studentId"]["$put"]({ param, form });
 
             if (!response.ok) {
                 throw new Error("حدث مشكلة في تعديل الطالب");

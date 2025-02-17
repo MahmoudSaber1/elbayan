@@ -3,7 +3,7 @@ import { ID, Query } from "node-appwrite";
 import { zValidator } from "@hono/zod-validator";
 
 import { createAdminClient } from "@/lib/appwrite";
-import { DATABASE_ID, STUDENTS_ID } from "@/config";
+import { DATABASE_ID, IMAGES_BUCKET_ID, STUDENTS_ID } from "@/config";
 import { sessionMiddleware } from "@/lib/session-middleware";
 
 import { Student } from "../types";
@@ -39,13 +39,26 @@ const app = new Hono()
 
         return c.json({ data: student });
     })
-    .post("/create", sessionMiddleware, zValidator("json", createStudentSchema), async (c) => {
+    .post("/create", sessionMiddleware, zValidator("form", createStudentSchema), async (c) => {
         const databases = c.get("databases");
+        const storage = c.get("storage");
 
-        const { name, code, birthDate, nationalId, phone, guardianPhone, profilePicture, address, school, gender } = c.req.valid("json");
+        const { name, code, birthDate, nationalId, phone, guardianPhone, profilePicture, nationalPicture, address, school, gender } = c.req.valid("form");
+
+        let uploadedProfileImageUrl: string | undefined;
+        let uploadedNationalImageUrl: string | undefined;
+        if (profilePicture instanceof File) {
+            const file = await storage.createFile(IMAGES_BUCKET_ID, ID.unique(), profilePicture);
+            const arrayBuffer = await storage.getFilePreview(IMAGES_BUCKET_ID, file.$id);
+            uploadedProfileImageUrl = `data:image/png;base64,${Buffer.from(arrayBuffer).toString("base64")}`;
+        }
+        if (nationalPicture instanceof File) {
+            const file = await storage.createFile(IMAGES_BUCKET_ID, ID.unique(), nationalPicture);
+            const arrayBuffer = await storage.getFilePreview(IMAGES_BUCKET_ID, file.$id);
+            uploadedNationalImageUrl = `data:image/png;base64,${Buffer.from(arrayBuffer).toString("base64")}`;
+        }
 
         const { account } = await createAdminClient();
-
         await account.create(ID.unique(), `${code}@eltbyan.com`, `${code}`, `${name}`);
 
         const student = await databases.createDocument(DATABASE_ID, STUDENTS_ID, ID.unique(), {
@@ -55,7 +68,8 @@ const app = new Hono()
             nationalId,
             phone,
             guardianPhone,
-            profilePicture,
+            profilePicture: uploadedProfileImageUrl,
+            nationalPicture: uploadedNationalImageUrl,
             address,
             school,
             gender,
@@ -63,11 +77,29 @@ const app = new Hono()
 
         return c.json({ data: student, message: "تم إضافة الطالب بنجاح" });
     })
-    .put("/update/:studentId", sessionMiddleware, zValidator("json", createStudentSchema), async (c) => {
+    .put("/update/:studentId", sessionMiddleware, zValidator("form", createStudentSchema), async (c) => {
         const databases = c.get("databases");
+        const storage = c.get("storage");
 
-        const { name, code, birthDate, nationalId, phone, guardianPhone, profilePicture, address, school, gender } = c.req.valid("json");
+        const { name, code, birthDate, nationalId, phone, guardianPhone, profilePicture, nationalPicture, address, school, gender } = c.req.valid("form");
         const { studentId } = c.req.param();
+
+        let uploadedProfileImageUrl: string | undefined;
+        let uploadedNationalImageUrl: string | undefined;
+        if (profilePicture instanceof File) {
+            const file = await storage.createFile(IMAGES_BUCKET_ID, ID.unique(), profilePicture);
+            const arrayBuffer = await storage.getFilePreview(IMAGES_BUCKET_ID, file.$id);
+            uploadedProfileImageUrl = `data:image/png;base64,${Buffer.from(arrayBuffer).toString("base64")}`;
+        } else {
+            uploadedProfileImageUrl = profilePicture;
+        }
+        if (nationalPicture instanceof File) {
+            const file = await storage.createFile(IMAGES_BUCKET_ID, ID.unique(), nationalPicture);
+            const arrayBuffer = await storage.getFilePreview(IMAGES_BUCKET_ID, file.$id);
+            uploadedNationalImageUrl = `data:image/png;base64,${Buffer.from(arrayBuffer).toString("base64")}`;
+        } else {
+            uploadedNationalImageUrl = nationalPicture;
+        }
 
         const student = await databases.updateDocument(DATABASE_ID, STUDENTS_ID, studentId, {
             name,
@@ -76,7 +108,8 @@ const app = new Hono()
             nationalId,
             phone,
             guardianPhone,
-            profilePicture,
+            profilePicture: uploadedProfileImageUrl,
+            nationalPicture: uploadedNationalImageUrl,
             address,
             school,
             gender,

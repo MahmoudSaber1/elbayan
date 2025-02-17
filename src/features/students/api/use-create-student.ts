@@ -11,8 +11,8 @@ export const useCreateStudent = () => {
     const queryClient = useQueryClient();
 
     const mutation = useMutation<ResponseType, Error, RequestType>({
-        mutationFn: async ({ json }) => {
-            const response = await client.api.students.create["$post"]({ json });
+        mutationFn: async ({ form }) => {
+            const response = await client.api.students.create["$post"]({ form });
 
             if (!response.ok) {
                 throw new Error("حدث مشكلة في إنشاء الطالب");

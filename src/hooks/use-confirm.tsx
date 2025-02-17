@@ -37,10 +37,10 @@ export const useConfirm = (title: string, message: string, variant: ButtonProps[
                     </CardHeader>
                     <div className="pt-4 w-full flex flex-col gap-y-2 lg:flex-row gap-x-2 items-center justify-end">
                         <Button onClick={handleCancel} variant={"outline"} className="w-full lg:w-auto">
-                            Cancel
+                            الغاء
                         </Button>
                         <Button onClick={handleConfirm} variant={variant} className="w-full lg:w-auto">
-                            Confirm
+                            تأكيد
                         </Button>
                     </div>
                 </CardContent>

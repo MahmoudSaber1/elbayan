@@ -13,7 +13,7 @@ export const DatePicker = ({ onChange, value, className, placeholder = "اختر
     return (
         <Popover>
             <PopoverTrigger asChild>
-                <Button variant={"outline"} size={"lg"} className={cn("w-full justify-start text-left font-normal px-3", !value && "text-muted-foreground", className)}>
+                <Button variant={"outline"} size={"default"} className={cn("w-full justify-start text-left font-normal px-3", !value && "text-muted-foreground", className)}>
                     {value ? format(value, "PPP") : <span>{placeholder}</span>}
                     <CalendarIcon className="mr-2 size-4" />
                 </Button>
