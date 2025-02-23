@@ -5,11 +5,12 @@ import { handle } from "hono/vercel";
 
 import auth from "@/features/auth/server/route";
 import students from "@/features/students/server/route";
+import teachers from "@/features/teachers/server/route";
 
 const app = new Hono().basePath("/api");
 app.use("/api/*", cors());
 
-const routes = app.route("/auth", auth).route("/students", students);
+const routes = app.route("/auth", auth).route("/students", students).route("/teachers", teachers);
 
 export const GET = handle(app);
 export const POST = handle(app);

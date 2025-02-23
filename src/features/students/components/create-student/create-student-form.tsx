@@ -99,8 +99,8 @@ export const CreateStudentForm = ({ onCancel }: CreateStudentFormProps) => {
 
                                 <InputField control={form.control} name="address" type="text" label="عنوان الطالب" withLabel={true} placeholder="ادخل عنوان الطالب" />
                                 <InputField control={form.control} name="school" type="text" label="مدرسة الطالب" withLabel={true} placeholder="ادخل مدرسة الطالب" />
+                                <SelectField control={form.control} name="gender" label="الجنس" withLabel={true} withoutImage={true} placeholder="اختر الجنس" options={studentStatusOptions} />
                             </div>
-                            <SelectField control={form.control} name="gender" label="الجنس" withLabel={true} withoutImage={true} placeholder="اختر الجنس" options={studentStatusOptions} />
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <FormField
                                     control={form.control}

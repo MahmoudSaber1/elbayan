@@ -8,46 +8,29 @@ import { Avatar } from "@/components/avatar";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
-import { Student } from "../../types";
-import { StudentActions } from "../student-actions";
+import { Teacher } from "../../types";
+import { TeacherActions } from "../teacher-actions";
 
-export const columns: ColumnDef<Student>[] = [
+export const columns: ColumnDef<Teacher>[] = [
     {
         accessorKey: "name",
         header: ({ column }) => {
             return (
                 <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-                    اسم الطالب
+                    اسم المعلم
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             );
         },
         cell: ({ row }) => {
             const name = row.original.name;
-            const profilePicture = row.original.profilePicture;
 
             return (
                 <div className="flex items-center gap-x-2 text-sm font-medium">
-                    <Avatar className="size-6" name={name} image={profilePicture} />
+                    <Avatar className="size-6" name={name} />
                     <p className="line-clamp-1">{name}</p>
                 </div>
             );
-        },
-    },
-    {
-        accessorKey: "code",
-        header: ({ column }) => {
-            return (
-                <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-                    كود الطالب
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
-            );
-        },
-        cell: ({ row }) => {
-            const code = row.original.code;
-
-            return <p className="line-clamp-1">{code}</p>;
         },
     },
     {
@@ -78,22 +61,6 @@ export const columns: ColumnDef<Student>[] = [
         },
         cell: ({ row }) => {
             const phone = row.original.phone;
-
-            return <p className="line-clamp-1">{phone}</p>;
-        },
-    },
-    {
-        accessorKey: "guardianPhone",
-        header: ({ column }) => {
-            return (
-                <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-                    رقم الوالد
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
-            );
-        },
-        cell: ({ row }) => {
-            const phone = row.original.guardianPhone;
 
             return <p className="line-clamp-1">{phone}</p>;
         },
@@ -133,35 +100,35 @@ export const columns: ColumnDef<Student>[] = [
         },
     },
     {
-        accessorKey: "address",
+        accessorKey: "hireDate",
         header: ({ column }) => {
             return (
                 <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-                    العنوان
+                    تاريخ التعيين
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             );
         },
         cell: ({ row }) => {
-            const address = row.original.address;
+            const hireDate = row.original.hireDate;
 
-            return <p className="line-clamp-1">{address}</p>;
+            return <p className="line-clamp-1">{new Date(hireDate).toLocaleDateString()}</p>;
         },
     },
     {
-        accessorKey: "school",
+        accessorKey: "studentsCount",
         header: ({ column }) => {
             return (
                 <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-                    المدرسة
+                    عدد الطلاب
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             );
         },
         cell: ({ row }) => {
-            const school = row.original.school;
+            const studentsCount = row.original.studentIds;
 
-            return <p className="line-clamp-1">{school}</p>;
+            return <p className="line-clamp-1">{studentsCount.length}</p>;
         },
     },
     {
@@ -186,11 +153,11 @@ export const columns: ColumnDef<Student>[] = [
             const id = row.original.$id;
 
             return (
-                <StudentActions id={id}>
+                <TeacherActions id={id}>
                     <Button variant={"ghost"} className="size-8 p-0">
                         <MoreVertical className="size-4" />
                     </Button>
-                </StudentActions>
+                </TeacherActions>
             );
         },
     },

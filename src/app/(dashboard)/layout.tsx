@@ -3,12 +3,16 @@ import { Sidebar } from "@/components/layout/sidebar";
 
 import { CreateStudentModal } from "@/features/students/components/create-student/create-student-modal";
 import { UpdateStudentModal } from "@/features/students/components/update-student/update-task-modal";
+import { CreateTeacherModal } from "@/features/teachers/components/create-teacher/create-teacher-modal";
+import { UpdateTeacherModal } from "@/features/teachers/components/update-teacher/update-teacher-modal";
 
 const DashboardLayout = ({ children }: PropsChildren) => {
     return (
         <div className="min-h-screen">
             <CreateStudentModal />
             <UpdateStudentModal />
+            <CreateTeacherModal />
+            <UpdateTeacherModal />
             <div className="flex w-full h-full">
                 <div className="fixed right-0 top-0 hidden lg:block lg:w-[264px] h-full overflow-y-auto">
                     <Sidebar />
