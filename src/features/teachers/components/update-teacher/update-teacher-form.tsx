@@ -77,7 +77,7 @@ export const UpdateTeacherForm = ({ onCancel, initialValues, studentOptions }: U
                                 الغاء
                             </Button>
                             <Button disabled={isPending} type="submit" size={"lg"} className="w-full sm:w-auto">
-                                اضافة المعلم
+                                تعديل المعلم
                             </Button>
                         </div>
                     </form>

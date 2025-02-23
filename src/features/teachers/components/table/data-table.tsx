@@ -38,7 +38,11 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => {
-                                    return <TableHead key={header.id}>{header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}</TableHead>;
+                                    return (
+                                        <TableHead className="text-right" key={header.id}>
+                                            {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                                        </TableHead>
+                                    );
                                 })}
                             </TableRow>
                         ))}

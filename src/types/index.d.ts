@@ -85,3 +85,21 @@ interface UpdateTeacherFormProps<T> {
     studentOptions?: { id: string; name: string; imageUrl?: string }[];
     initialValues: T;
 }
+
+// Groups Props
+interface GetGroupProps {
+    search?: string | null;
+}
+interface GroupActionsProps {
+    id: string;
+    children: React.ReactNode;
+}
+interface CreateGroupFormProps {
+    onCancel?: () => void;
+    teacherOptions?: { id: string; name: string; imageUrl?: string }[];
+}
+interface UpdateGroupFormProps<T> {
+    onCancel?: () => void;
+    teacherOptions?: { id: string; name: string; imageUrl?: string }[];
+    initialValues: T;
+}

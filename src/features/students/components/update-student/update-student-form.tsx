@@ -192,7 +192,7 @@ export const UpdateStudentForm = ({ onCancel, initialValues }: UpdateStudentForm
                                 الغاء
                             </Button>
                             <Button disabled={isPending} type="submit" size={"lg"} className="w-full sm:w-auto">
-                                اضافة الطالب
+                                تعديل الطالب
                             </Button>
                         </div>
                     </form>

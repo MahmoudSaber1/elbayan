@@ -1,8 +1,10 @@
 import { Navbar } from "@/components/layout/navbar";
 import { Sidebar } from "@/components/layout/sidebar";
 
-import { CreateStudentModal } from "@/features/students/components/create-student/create-student-modal";
+import { UpdateGroupModal } from "@/features/groups/components/update-group/update-group-modal";
+import { CreateGroupModal } from "@/features/groups/components/create-group/create-group-modal";
 import { UpdateStudentModal } from "@/features/students/components/update-student/update-task-modal";
+import { CreateStudentModal } from "@/features/students/components/create-student/create-student-modal";
 import { CreateTeacherModal } from "@/features/teachers/components/create-teacher/create-teacher-modal";
 import { UpdateTeacherModal } from "@/features/teachers/components/update-teacher/update-teacher-modal";
 
@@ -13,6 +15,8 @@ const DashboardLayout = ({ children }: PropsChildren) => {
             <UpdateStudentModal />
             <CreateTeacherModal />
             <UpdateTeacherModal />
+            <CreateGroupModal />
+            <UpdateGroupModal />
             <div className="flex w-full h-full">
                 <div className="fixed right-0 top-0 hidden lg:block lg:w-[264px] h-full overflow-y-auto">
                     <Sidebar />
