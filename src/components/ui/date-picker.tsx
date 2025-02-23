@@ -19,7 +19,15 @@ export const DatePicker = ({ onChange, value, className, placeholder = "اختر
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0">
-                <Calendar mode="single" selected={value} onSelect={(date) => onChange(date as Date)} initialFocus />
+                <Calendar
+                    mode="single"
+                    selected={value}
+                    onSelect={(date) => onChange(date as Date)}
+                    initialFocus
+                    captionLayout="dropdown" // إضافة القوائم المنسدلة لاختيار الشهر والسنة
+                    fromYear={2000} // تحديد أقل سنة متاحة
+                    toYear={2030}
+                />
             </PopoverContent>
         </Popover>
     );
