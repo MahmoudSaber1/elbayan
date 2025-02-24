@@ -10,13 +10,13 @@ import { cn } from "@/lib/utils";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { DottedSeparator } from "@/components/dotted-separator";
-import { InputField, SelectField } from "@/components/input-field";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { InputField, MultiSelectField, SelectField } from "@/components/input-field";
 
 import { createGroupSchema } from "../../schemas";
 import { useCreateGroup } from "../../api/use-create-group";
 
-export const CreateGroupForm = ({ onCancel, teacherOptions }: CreateGroupFormProps) => {
+export const CreateGroupForm = ({ onCancel, teacherOptions, studentOptions }: CreateGroupFormProps) => {
     const { mutate: createGroupMutate, isPending } = useCreateGroup();
 
     const form = useForm<z.infer<typeof createGroupSchema>>({
@@ -24,6 +24,8 @@ export const CreateGroupForm = ({ onCancel, teacherOptions }: CreateGroupFormPro
         defaultValues: {
             name: "",
             teacherId: "",
+            groupNumber: "",
+            students: [],
         },
     });
 
@@ -53,7 +55,9 @@ export const CreateGroupForm = ({ onCancel, teacherOptions }: CreateGroupFormPro
                     <form onSubmit={form.handleSubmit(onSubmit)}>
                         <div className="flex flex-col gap-y-4">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <InputField control={form.control} name="groupNumber" type="text" label="رقم المجموعة" withLabel={true} placeholder="ادخل رقم المجموعة" />
                                 <InputField control={form.control} name="name" type="text" label="اسم الحلقة" withLabel={true} placeholder="ادخل اسم الحلقة" />
+                                <MultiSelectField control={form.control} name="students" label="الطلاب" withLabel={true} placeholder="اختر الطلاب" options={studentOptions} />
                                 <SelectField control={form.control} name="teacherId" label="المعلم" withLabel={true} withoutImage={true} placeholder="اختر المعلم" options={teacherOptions} />
                             </div>
                         </div>

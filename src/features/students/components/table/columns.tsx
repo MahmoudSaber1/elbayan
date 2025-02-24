@@ -177,7 +177,7 @@ export const columns: ColumnDef<Student>[] = [
         cell: ({ row }) => {
             const gender = row.original.gender;
 
-            return <Badge variant={gender === "MALE" ? "default" : "secondary"}>{gender === "MALE" ? "ذكر" : "انثي"}</Badge>;
+            return <Badge variant={gender === "MALE" ? "default" : "destructive"}>{gender === "MALE" ? "ذكر" : "انثي"}</Badge>;
         },
     },
     {

@@ -97,9 +97,11 @@ interface GroupActionsProps {
 interface CreateGroupFormProps {
     onCancel?: () => void;
     teacherOptions?: { id: string; name: string; imageUrl?: string }[];
+    studentOptions?: { id: string; name: string; imageUrl?: string }[];
 }
 interface UpdateGroupFormProps<T> {
     onCancel?: () => void;
     teacherOptions?: { id: string; name: string; imageUrl?: string }[];
+    studentOptions?: { id: string; name: string; imageUrl?: string }[];
     initialValues: T;
 }

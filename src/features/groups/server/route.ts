@@ -35,11 +35,13 @@ const app = new Hono()
     .post("/create", sessionMiddleware, zValidator("json", createGroupSchema), async (c) => {
         const databases = c.get("databases");
 
-        const { name, teacherId } = c.req.valid("json");
+        const { name, teacherId, groupNumber, students } = c.req.valid("json");
 
         const group = await databases.createDocument(DATABASE_ID, GROUPS_ID, ID.unique(), {
             name,
             teacherId,
+            groupNumber,
+            students,
         });
 
         return c.json({ data: group, message: "تم إضافة الحلقة بنجاح" });
@@ -47,12 +49,14 @@ const app = new Hono()
     .put("/update/:groupId", sessionMiddleware, zValidator("json", createGroupSchema), async (c) => {
         const databases = c.get("databases");
 
-        const { name, teacherId } = c.req.valid("json");
+        const { name, teacherId, groupNumber, students } = c.req.valid("json");
         const { groupId } = c.req.param();
 
         const group = await databases.updateDocument(DATABASE_ID, GROUPS_ID, groupId, {
             name,
             teacherId,
+            groupNumber,
+            students,
         });
 
         return c.json({ data: group, message: "تم تعديل الحلقة بنجاح" });

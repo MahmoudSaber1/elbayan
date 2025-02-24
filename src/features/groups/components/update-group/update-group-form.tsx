@@ -10,20 +10,21 @@ import { cn } from "@/lib/utils";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { DottedSeparator } from "@/components/dotted-separator";
-import { InputField, SelectField } from "@/components/input-field";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { InputField, MultiSelectField, SelectField } from "@/components/input-field";
 
 import { Group } from "../../types";
 import { createGroupSchema } from "../../schemas";
 import { useUpdateGroup } from "../../api/use-update-group";
 
-export const UpdateGroupForm = ({ onCancel, initialValues, teacherOptions }: UpdateGroupFormProps<Group>) => {
+export const UpdateGroupForm = ({ onCancel, initialValues, teacherOptions, studentOptions }: UpdateGroupFormProps<Group>) => {
     const { mutate: updateGroupMutate, isPending } = useUpdateGroup();
 
     const form = useForm<z.infer<typeof createGroupSchema>>({
         resolver: zodResolver(createGroupSchema),
         defaultValues: {
             ...initialValues,
+            groupNumber: initialValues.groupNumber || "",
         },
     });
 
@@ -53,7 +54,9 @@ export const UpdateGroupForm = ({ onCancel, initialValues, teacherOptions }: Upd
                     <form onSubmit={form.handleSubmit(onSubmit)}>
                         <div className="flex flex-col gap-y-4">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <InputField control={form.control} name="groupNumber" type="text" label="رقم الحلقة" withLabel={true} placeholder="ادخل رقم الحلقة" />
                                 <InputField control={form.control} name="name" type="text" label="اسم الحلقة" withLabel={true} placeholder="ادخل اسم الحلقة" />
+                                <MultiSelectField control={form.control} name="students" label="الطلاب" withLabel={true} placeholder="اختر الطلاب" options={studentOptions} />
                                 <SelectField control={form.control} name="teacherId" label="المعلم" withLabel={true} withoutImage={true} placeholder="اختر المعلم" options={teacherOptions} />
                             </div>
                         </div>

@@ -14,6 +14,22 @@ import { useGetTeacherName } from "../../hooks/get-teacher-name";
 
 export const columns: ColumnDef<Group>[] = [
     {
+        accessorKey: "groupNumber",
+        header: ({ column }) => {
+            return (
+                <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+                    رقم الحلقة
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            );
+        },
+        cell: ({ row }) => {
+            const groupNumber = row.original.groupNumber;
+
+            return <p className="line-clamp-1">{groupNumber}</p>;
+        },
+    },
+    {
         accessorKey: "name",
         header: ({ column }) => {
             return (
@@ -50,6 +66,22 @@ export const columns: ColumnDef<Group>[] = [
             const name = useGetTeacherName(teacherId);
 
             return <p className="line-clamp-1">{name}</p>;
+        },
+    },
+    {
+        accessorKey: "studentsCount",
+        header: ({ column }) => {
+            return (
+                <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+                    عدد الطلاب
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            );
+        },
+        cell: ({ row }) => {
+            const studentsCount = row.original.students;
+
+            return <p className="line-clamp-1">{studentsCount.length}</p>;
         },
     },
     {

@@ -59,7 +59,7 @@ const app = new Hono()
         }
 
         const { account } = await createAdminClient();
-        await account.create(ID.unique(), `${code}@eltbyan.com`, `${code}`, `${name}`);
+        await account.create(ID.unique(), `${code}@eltbyan.com`, `eltbyan${code}`, `${name}`);
 
         const student = await databases.createDocument(DATABASE_ID, STUDENTS_ID, ID.unique(), {
             name,
