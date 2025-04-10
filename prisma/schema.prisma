@@ -1,0 +1,90 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  password  String
+  role      Role     @default(STUDENT)
+  student   Student? @relation(fields: [studentId], references: [id])
+  teacher   Teacher? @relation(fields: [teacherId], references: [id])
+  studentId Int?
+  teacherId Int?
+}
+
+model Student {
+  id               Int           @id @default(autoincrement())
+  name             String
+  studentCode      String        @unique
+  dateOfBirth      DateTime
+  nationalId       String        @unique
+  phone            String?
+  guardianPhone    String
+  gender           Gender
+  profilePicture   String?
+  birthCertificate String?
+  paymentStatus    Float
+  address          String
+  school           String
+  attendance       Attendance[]
+  achievements     Achievement[]
+  teacherId        Int
+  teacher          Teacher       @relation(fields: [teacherId], references: [id])
+  User             User[]
+  Group            Group?        @relation(fields: [groupId], references: [id])
+  groupId          Int?
+}
+
+model Teacher {
+  id           Int       @id @default(autoincrement())
+  name         String
+  nationalId   String    @unique
+  dateOfBirth  DateTime
+  gender       Gender
+  phone        String
+  joinDate     DateTime
+  salaryStatus Float
+  students     Student[]
+  groups       Group[]
+  User         User[]
+}
+
+model Group {
+  id        Int       @id @default(autoincrement())
+  name      String
+  teacherId Int
+  teacher   Teacher   @relation(fields: [teacherId], references: [id])
+  students  Student[]
+}
+
+model Attendance {
+  id        Int      @id @default(autoincrement())
+  date      DateTime
+  status    Boolean
+  studentId Int
+  student   Student  @relation(fields: [studentId], references: [id])
+}
+
+model Achievement {
+  id        Int     @id @default(autoincrement())
+  details   String
+  studentId Int
+  student   Student @relation(fields: [studentId], references: [id])
+}
+
+enum Role {
+  ADMIN
+  TEACHER
+  STUDENT
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
